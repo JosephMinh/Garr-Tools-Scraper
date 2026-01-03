@@ -2,3 +2,6 @@
 *.json
 *.txt
 *.csv
+*.env
+__pycache__/
+.vscode/

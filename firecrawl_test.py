@@ -1,18 +1,21 @@
 from firecrawl import Firecrawl
 from pydantic import BaseModel
 from tool_schemas import Tool, Series, ProductType, Products
+import os
 
-app = Firecrawl(api_key="fc-f6dd17dfb285400b85b5002f1701962f")
+app = Firecrawl(api_key=os.getenv("firecrawl_api"))
 
 result = app.scrape(
-    'https://www.garrtool.com/product-details/?EDP=70631',
-    formats=[{
-      "type": "json",
-      "schema": Tool.model_json_schema(),
-      "prompt": "Scrape all relevant fields for the tool on this page. Return a JSON object matching the Tool schema."
-    }],
+    "https://www.garrtool.com/product-details/?EDP=70631",
+    formats=[
+        {
+            "type": "json",
+            "schema": Tool.model_json_schema(),
+            "prompt": "Scrape all relevant fields for the tool on this page. Return a JSON object matching the Tool schema.",
+        }
+    ],
     only_main_content=False,
-    timeout=120000
+    timeout=120000,
 )
 
 print(result)
